@@ -2,6 +2,9 @@
 
 Discovered automatically by mcp_gateway. Exposes per-device MIoT properties
 and actions as MCP tools.
+
+Every tool returned here declares both an input schema (``parameters``) and
+a response schema (``response_schema``); see mcp_tools.build_mcp_tools().
 """
 from __future__ import annotations
 
@@ -31,7 +34,8 @@ async def async_get_device_tools(
 ) -> tuple[list[llm.Tool], str, Any] | None:
     """Return MCP tools, prompt, and device description for a Xiaomi device.
 
-    Called by mcp_gateway when a xiaomi_home device is discovered.
+    Called by mcp_gateway when a xiaomi_home device is discovered. Every
+    returned tool carries a response schema describing its output.
     Returns None if the device cannot be found or has no tools.
     """
     if DeviceDescription is None:
