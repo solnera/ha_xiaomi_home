@@ -1,4 +1,13 @@
 # CHANGELOG
+## v0.5.0
+### Added
+- Add the MCP platform. `mcp.py` provides the `async_get_device_tools` discovery entry point and `mcp_tools.py` converts MIoT-Spec-V2 services, properties and actions into `llm.Tool` instances, which allows AI assistants to read/write device properties and invoke actions through the mcp_gateway integration.
+- Require a response schema on every MCP tool. The schema is derived from the MIoT-Spec-V2 instance, the tool response is validated against it before returning, and the returned shape is appended to the tool description.
+### Changed
+- Declare only the value types in the MCP tool response schema, so that an off-spec device reading is not turned into a tool call error by an MCP client validating the response. The range and the option limits stay in the description.
+- Map the raw action output onto the named out params, accepting both the `{"piid": x, "value": y}` list and the bare value list form.
+- Give the MCP action in/out params unique JSON keys, so that duplicate MIoT-Spec-V2 names no longer collide.
+
 ## v0.4.7
 ### Added
 - Add turkish language in multi_lang.json. [#1593](https://github.com/XiaoMi/ha_xiaomi_home/pull/1593)
